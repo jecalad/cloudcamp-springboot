@@ -1,5 +1,12 @@
 on:
   push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
 
 defaults:
   run:
@@ -27,10 +34,17 @@ jobs:
           ./gradlew build
 
       - name: build docker
+        id: build_docker
         run: |
-          docker build -t jecalad/testing:latest .
+          docker_env="dev"
+          if [ ${{ github.ref_name }} == "main" ]; then
+            docker_env="prod"
+          fi
+          docker build -t jecalad/testing:$docker_env .
+          echo "docker_env=$docker_env" >> $GITHUB_OUTPUT
 
       - name: docker login
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'dev' }}
         run: |
           docker login -u jecalad -p ${{ secrets.docker_token }}  
-          docker push jecalad/testing:latest
+          docker push jecalad/testing:${{ steps.build_docker.outputs.docker_env }}
