@@ -25,4 +25,8 @@ jobs:
       - name: build docker
         run: |
           docker build -t jecalad/testing:latest .
+
+      - name: docker login
+        run: |
+          docker login -u jecalad -p ${{ secrets.docker_token }}  
           docker push jecalad/testing:latest
