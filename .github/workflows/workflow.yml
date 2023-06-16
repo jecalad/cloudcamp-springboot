@@ -34,7 +34,7 @@ jobs:
             docker_env="prod"
           fi
           docker build -t jecalad/testing:$docker_env .
-          echo "docker_env=$docker_env" >> $GITHUB_OUTPUTS
+          echo "docker_env=$docker_env" >> $GITHUB_OUTPUT
 
       - name: docker login
         run: |
