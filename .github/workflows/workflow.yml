@@ -24,5 +24,5 @@ jobs:
 
       - name: build docker
         run: |
-          docker build -t jecalad/testing:latest
-          docker push ecalad/testing:latest
+          docker build -t jecalad/testing:latest .
+          docker push jecalad/testing:latest
