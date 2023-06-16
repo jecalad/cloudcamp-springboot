@@ -11,6 +11,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+
+      - name: install java 17 ubuntu
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
         
       - name: build
         run: |
